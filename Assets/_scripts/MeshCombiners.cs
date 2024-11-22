@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//unifies the meshes of the cubes winning up to 100 fps
 public class MeshCombiner
 {
     public static void CombineMeshesByMaterial(GameObject parent)
@@ -12,10 +14,10 @@ public class MeshCombiner
             return;
         }
 
-        // Diccionario para agrupar CombineInstance por material
+       
         Dictionary<Material, List<CombineInstance>> combineInstancesByMaterial = new Dictionary<Material, List<CombineInstance>>();
 
-        // Recopilar mallas y separarlas por material
+        // Collects meshes and sort by material
         foreach (MeshFilter meshFilter in meshFilters)
         {
             if (meshFilter.sharedMesh == null) continue;
@@ -30,7 +32,7 @@ public class MeshCombiner
                 combineInstancesByMaterial[material] = new List<CombineInstance>();
             }
 
-            // Ajustar la transformación al espacio local del objeto padre
+          
             CombineInstance combineInstance = new CombineInstance
             {
                 mesh = meshFilter.sharedMesh,
@@ -38,16 +40,16 @@ public class MeshCombiner
             };
 
             combineInstancesByMaterial[material].Add(combineInstance);
-            meshFilter.gameObject.SetActive(false); // Desactivar los hijos
+            meshFilter.gameObject.SetActive(false); 
         }
 
-        // Crear una malla combinada para cada material
+        // creates a mesh combine for each material
         foreach (var entry in combineInstancesByMaterial)
         {
             Material material = entry.Key;
             List<CombineInstance> combineInstances = entry.Value;
 
-            // Crear un nuevo GameObject para cada material
+            // Creates a new gameobject for each material
             GameObject combinedObject = new GameObject($"{parent.name}_{material.name}_Combined");
             combinedObject.transform.parent = parent.transform;
             combinedObject.transform.localPosition = Vector3.zero;
