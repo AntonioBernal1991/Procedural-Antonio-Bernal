@@ -1,114 +1,69 @@
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador 3D de Mapas Modulares y Caminos</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 20px;
-        }
-        h1, h2, h3 {
-            color: #333;
-        }
-        code {
-            background: #f4f4f4;
-            padding: 2px 4px;
-            border-radius: 4px;
-            font-family: monospace;
-        }
-        pre {
-            background: #f4f4f4;
-            padding: 10px;
-            border-radius: 4px;
-            overflow-x: auto;
-        }
-        .section {
-            margin-bottom: 20px;
-        }
-    </style>
-</head>
-<body>
-    <h1>Generador 3D de Mapas Modulares y Caminos</h1>
-    <p>Este proyecto implementa un sistema para generar mapas 3D modulares con caminos creados proceduralmente, optimizado para rendimiento y extensibilidad. El generador crea módulos usando cubos, genera caminos a través de ellos y gestiona los objetos de manera eficiente mediante un sistema de pooling. También incluye mecanismos para combinar mallas y generar caminos ramificados.</p>
+# Generador Procedural de Mapas 3D
 
-    <div class="section">
-        <h2>Características</h2>
-        <ul>
-            <li><strong>Generación Procedural de Caminos:</strong> Genera caminos a través de módulos 3D basados en cubos, evitando repeticiones y permitiendo ramificaciones.</li>
-            <li><strong>Object Pooling:</strong> Maneja instancias de cubos eficientemente para reducir la sobrecarga de memoria.</li>
-            <li><strong>Combinación de Mallas:</strong> Optimiza el rendimiento combinando mallas, mejorando los FPS.</li>
-            <li><strong>Creación Recursiva de Módulos:</strong> Crea dinámicamente módulos y los posiciona en el espacio 3D.</li>
-            <li><strong>Control de Cámara:</strong> Proporciona un sistema básico de movimiento con teclas <code>WASD</code> para explorar el entorno generado.</li>
-        </ul>
-    </div>
+Este proyecto es un generador procedural de mapas en 3D desarrollado en Unity. Genera mapas dinámicamente a medida que el jugador explora, ofreciendo posibilidades infinitas para la creación de terrenos y caminos.
 
-    <div class="section">
-        <h2>Descripción del Código</h2>
-        <h3>Clases Principales</h3>
-        <ul>
-            <li>
-                <strong>MapGenerator3D:</strong> Actúa como el nodo central, coordinando la creación de módulos y caminos.
-                <ul>
-                    <li><code>DecideNextModulePosition</code>: Determina la posición del próximo módulo y los puntos de salida del camino.</li>
-                    <li><code>GenerateModules</code>: Inicia la generación recursiva de módulos.</li>
-                </ul>
-            </li>
-            <li>
-                <strong>ModuleGenerator:</strong> Gestiona la creación de módulos individuales, incluyendo capas (suelo y hierba) y combinación de mallas.
-            </li>
-            <li>
-                <strong>PathGenerator:</strong> Genera caminos y gestiona ramificaciones.
-            </li>
-            <li>
-                <strong>ObjectPool:</strong> Implementa un sistema de pooling para optimizar la gestión de cubos.
-            </li>
-            <li>
-                <strong>MeshCombiner:</strong> Combina mallas por material para reducir llamadas de renderizado y mejorar FPS.
-            </li>
-        </ul>
-    </div>
+## Cómo Ejecutar el Proyecto
 
-    <div class="section">
-        <h2>Configuración y Uso</h2>
-        <h3>Requisitos Previos</h3>
-        <ul>
-            <li>Unity versión 2020 o superior.</li>
-            <li>Proyecto configurado como 3D.</li>
-        </ul>
-        <h3>Instalación</h3>
-        <ol>
-            <li>Clona o descarga el repositorio en tu proyecto de Unity.</li>
-            <li>Coloca todos los scripts en la carpeta <code>Assets/Scripts</code>.</li>
-            <li>Asigna los prefabs y materiales necesarios en el Editor de Unity.</li>
-        </ol>
-    </div>
+1. **Abrir la Escena:**
+   - Abre la escena `ProceduralScene` en Unity.
 
-    <div class="section">
-        <h2>Optimización de Rendimiento</h2>
-        <ul>
-            <li><strong>Combinación de Mallas:</strong> La clase <code>MeshCombiner</code> reduce las llamadas de renderizado.</li>
-            <li><strong>Object Pooling:</strong> La clase <code>ObjectPool</code> minimiza la creación de objetos en tiempo de ejecución.</li>
-        </ul>
-    </div>
+2. **Ajustar Parámetros del Mapa:**
+   - Selecciona el objeto `MapGenerator` en la jerarquía.
+   - Ajusta los parámetros del mapa (ancho, alto, espaciado, número de módulos, etc.) desde el inspector según tus necesidades.
 
-    <div class="section">
-        <h2>Ejemplo de Código</h2>
-        <pre>
-<code>
-MapGenerator3D.Instance.DecideNextModulePosition(5, 5, CurrentDirection.RIGHT);
-StartCoroutine(ModuleGenerator.StartRecursiveGeneration(10));
-</code>
-        </pre>
-    </div>
+3. **Probar el Juego:**
+   - Presiona el botón **Play** en el editor de Unity.
+   - Usa las teclas **WASD** para moverte por la escena y observa cómo el mapa se genera dinámicamente a tu alrededor.
 
-    <div class="section">
-        <h2>Autores y Reconocimientos</h2>
-        <p><strong>Autor:</strong> Antonio</p>
-        <p><strong>Agradecimientos:</strong> Comunidad de Unity por inspiración y guía.</p>
-    </div>
-</body>
-</html>
+## Características Principales
+
+- **Generación Procedural:**
+  - Genera terrenos y caminos dinámicamente utilizando módulos.
+  - Combina mallas para optimizar el rendimiento.
+
+- **Movimiento Suave de la Cámara:**
+  - Navega por el mapa utilizando el script `CameraController` para una exploración fluida.
+
+- **Sistema de Caminos y Módulos:**
+  - Un enfoque modular garantiza una generación eficiente y expansiva del mapa.
+
+- **Optimización de Rendimiento:**
+  - Utiliza un sistema de "Object Pooling" y combinación de mallas para mantener altos índices de fotogramas.
+
+## Descripción de Scripts
+
+- **CameraController.cs:**
+  - Gestiona el movimiento suave de la cámara utilizando las teclas WASD.
+
+- **MapGenerator3D.cs:**
+  - Script principal que maneja la generación procedural y posicionamiento de módulos.
+
+- **ModuleGenerator.cs:**
+  - Genera capas de terreno y módulos de caminos.
+
+- **PathGenerator.cs:**
+  - Crea caminos a través de los módulos de manera dinámica.
+
+- **ObjectPool.cs:**
+  - Gestiona y reutiliza objetos del juego de manera eficiente para optimizar el rendimiento.
+
+- **MeshCombiner.cs:**
+  - Combina mallas para mejorar el rendimiento de renderizado.
+
+- **ModuleInfo.cs y ModuleInfoQueueManager.cs:**
+  - Administran los datos de posicionamiento y caminos utilizando una cola.
+
+## Requisitos
+
+- Unity 2021 o una versión superior.
+- Conocimientos básicos sobre el inspector y las mecánicas de juego en Unity.
+
+## Notas
+
+- El proyecto utiliza `TextMesh Pro`. Asegúrate de tenerlo instalado y configurado en tu proyecto de Unity.
+- Los mensajes de depuración en la consola proporcionarán información sobre el proceso de generación.
+
+---
+
+¡Explora y diviértete!
